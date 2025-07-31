@@ -1,0 +1,9 @@
+services:
+  spring-app:
+    container_name: ${CONTAINER_NAME}
+    build:
+      context: .
+      args:
+        DATE: ${DATE}
+    ports:
+      - ${CONTAINER_PORT}:${CONTAINER_PORT}

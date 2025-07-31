@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: MerchantAppSSB
+  data:
+    redis:
+      repositories:
+        enabled: false
+  datasource:
+    url: jdbc:postgresql://10.86.34.81:5432/invoke
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+        format_sql: true
+#  redis:
+#    sentinel:
+#      master: mymaster
+#      nodes:
+#        - 10.86.34.81:6379
+#      lettuce:
+#        shutdown-timeout: 200ms
+#    cache:
+#      defaultCacheConfig:
+#        ttlInSecond: 600
+#        usePrefix: MA_CACHE_
+#        cacheNullValues: false
+#      initialCacheConfigurations:
+#        OPS_CACHE_SERVICE_CONFIG:
+#          ttlInSecond: 600
+#          cacheNullValues: false
+#          usePrefix:
+#        OPS_OTP:
+#          ttlInSecond: 600
+#          cacheNullValues: false
+#          usePrefix: OPS_CACHE_
+#        MA_CACHE_DATA_CONFIG:
+#          ttlInSecond: 86400
+#          cacheNullValues: false
+#          usePrefix: MA_CACHE_DATA_CONFIG
+logging:
+  config: classpath:log4j2.xml
+server:
+  servlet:
+    context-path: /base-invoke-service
+  compression:
+    enabled: true
+    min-response-size: 1KB
+  http2:
+    enabled: true

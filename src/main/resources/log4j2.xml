@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="com.quangnv.msb">
+    <Properties>
+        <Property name="baseDir">${sys:jboss.home.dir:-.}/MA/logs</Property>
+        <Property name="LOG_PATTERN">%n %d %p %-18.18M - [%X{TK}][%X{ETK}][%X{RT}][%X{LOGIN}] [%c] %msk</Property>
+        <Property name="FILE_SIZE">10 MB</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- console log -->
+        <Console name="C" target="SYSTEM_OUT">
+            <MaskingLayout>
+                <PatternLayout pattern="${LOG_PATTERN}"/>
+                <Maskers>
+                    <CardNumberMasker startKeep="6" endKeep="4" luhnCheck="true"/>
+                    <PasswordMasker keywords="pass|password"/>
+                </Maskers>
+            </MaskingLayout>
+        </Console>
+        <!-- all file log -->
+        <!-- <RollingFile name="F" fileName="${baseDir}/all.log" filePattern="${baseDir}/all-%d{yyyy-MM-dd}.log.gz">
+            <MaskingLayout>
+                <PatternLayout pattern="${LOG_PATTERN}"/>
+                <Maskers>
+                    <CardNumberMasker startKeep="6" endKeep="4" luhnCheck="true"/>
+                    <PasswordMasker keywords="pass|password"/>
+                </Maskers>
+            </MaskingLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${FILE_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100">
+                <Delete basePath="${baseDir}" maxDepth="2">
+                    <IfFileName glob="*/all-*.log.gz">
+                        <IfLastModified age="P30D">
+                            <IfAny>
+                                <IfAccumulatedFileSize exceeds="100 GB" />
+                                <IfAccumulatedFileCount exceeds="10" />
+                            </IfAny>
+                        </IfLastModified>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile> -->
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.hibernate" level="warn"/>
+        <Logger name="com.zaxxer.hikari" level="error"/>
+        <Logger name="com.quangnv.msb" level="INFO" additivity="false">
+            <AppenderRef ref="C" level="info"/>
+            <!-- <AppenderRef ref="F" level="info"/> -->
+        </Logger>
+        <Root level="INFO" additivity="false">
+            <AppenderRef ref="C"/>
+        </Root>
+    </Loggers>
+</Configuration>
