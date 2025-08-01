@@ -5,5 +5,6 @@ services:
       context: .
       args:
         DATE: ${DATE}
+        JAR_NAME: ${JAR_NAME}
     ports:
       - ${CONTAINER_PORT}:${CONTAINER_PORT}

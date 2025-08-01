@@ -10,6 +10,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -78,5 +79,12 @@ public class ApiExceptionHandler {
     public ResponseEntity<StandardResponse> handleUnExpectedException(UnExpectedException ex) {
         log.error(">>>ApiExceptionHandler",ex);
         return ResponseEntity.ok(responseCreator.error(ex));
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<StandardResponse> handleAuthException(AuthenticationException ex) {
+        log.error(">>>ApiExceptionHandler",ex);
+        StandardResponse response = responseCreator.error(new UnExpectedException(MAErrorCode.USER_DOES_NOT_EXIST, ex.getMessage()));
+        return ResponseEntity.ok(response);
     }
 }

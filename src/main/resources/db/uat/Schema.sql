@@ -1,16 +1,18 @@
-create table users
+CREATE TABLE users
 (
-    id                bigserial
-        constraint "PK_c62436add5ba01a5832c135ff25"
-            primary key,
-    department_code   varchar(50),
-    hris_id           varchar(50),
-    user_role         varchar(50),
-    name              varchar(255),
-    email             varchar(255)            not null,
-    calculation_date  date      default now() not null,
-    manager_name      varchar,
-    manager_email     varchar,
-    created_at        timestamp default now() not null,
-    updated_at        timestamp default now() not null
+    id                      BIGSERIAL PRIMARY KEY,
+    username                VARCHAR(50)             NOT NULL UNIQUE,
+    password                VARCHAR(100)            NOT NULL,
+    full_name               VARCHAR(100)            NOT NULL,
+    phone                   VARCHAR(15),
+    account_non_expired     BOOLEAN                 NOT NULL,
+    account_non_locked      BOOLEAN                 NOT NULL,
+    credentials_non_expired BOOLEAN                 NOT NULL,
+    enabled                 BOOLEAN                 NOT NULL,
+    status                  VARCHAR(255), -- Enum kiểu chuỗi
+    role                    VARCHAR(20)             NOT NULL,
+    created_at              timestamp default now() not null,
+    updated_at              timestamp default now() not null,
+    created_by              VARCHAR(50),
+    updated_by              VARCHAR(50)
 );

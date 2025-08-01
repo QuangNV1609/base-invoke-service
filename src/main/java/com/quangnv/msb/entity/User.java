@@ -1,5 +1,6 @@
 package com.quangnv.msb.entity;
 
+import com.quangnv.msb.configuration.enums.UserStatus;
 import com.querydsl.core.annotations.QueryEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +8,6 @@ import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -19,29 +19,37 @@ public class User extends AuditEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id") // Có thể bỏ nếu trùng tên
     private Long id;
 
-    @Column(name = "department_code", length = 50)
-    private String departmentCode;
+    @Column(name = "username", nullable = false, unique = true, length = 50)
+    private String username;
 
-    @Column(name = "hris_id", length = 50)
-    private String hrisId;
+    @Column(name = "password", nullable = false, length = 100)
+    private String password;
 
-    @Column(name = "user_role", length = 50)
-    private String userRole;
+    @Column(name = "full_name", nullable = false, length = 100)
+    private String fullName;
 
-    @Column(name = "name", length = 255)
-    private String name;
+    @Column(name = "phone", nullable = true, length = 15)
+    private String phone;
 
-    @Column(name = "email", length = 255, nullable = false)
-    private String email;
+    @Column(name = "account_non_expired", nullable = false)
+    private boolean accountNonExpired;
 
-    @Column(name = "calculation_date", nullable = false)
-    private LocalDate calculationDate;
+    @Column(name = "account_non_locked", nullable = false)
+    private boolean accountNonLocked;
 
-    @Column(name = "manager_name")
-    private String managerName;
+    @Column(name = "credentials_non_expired", nullable = false)
+    private boolean credentialsNonExpired;
 
-    @Column(name = "manager_email")
-    private String managerEmail;
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
+
+    @Column(name = "role", nullable = false, length = 20)
+    private String role;
 }

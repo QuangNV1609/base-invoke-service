@@ -47,13 +47,26 @@ spring:
 #          ttlInSecond: 86400
 #          cacheNullValues: false
 #          usePrefix: MA_CACHE_DATA_CONFIG
+msb:
+  security:
+    jwt:
+      key: HMAC-SHA_RFC7518_0xCAFEDEAD_0xCAFEBABE
+      accessTokenTtlInMinutes: 15
+      refreshTokenTtlMinutes: 1440
+    permitAllActions:
+      - LOGIN
+      - FORGOT_PASSWORD
+      - RESET_PASSWORD
+    permitAllUrls:
+      - /public/**
 logging:
   config: classpath:log4j2.xml
 server:
   servlet:
-    context-path: /base-invoke-service
+    context-path: /spring/base-invoke-service
   compression:
     enabled: true
     min-response-size: 1KB
   http2:
     enabled: true
+  port: 8080
