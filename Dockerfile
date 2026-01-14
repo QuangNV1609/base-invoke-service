@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM amazoncorretto:8
 
 # Khai báo biến truyền từ docker-compose hoặc build command
 ARG DATE
